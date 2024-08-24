@@ -1,0 +1,63 @@
+Text outputs
+
+------supervised movies model output------
+IMDB Model Metrics for Movies:
+Mean Squared Error (MSE): 1.23
+R-squared (R2): 0.05
+
+TMDB Model Metrics for Movies:
+Mean Squared Error (MSE): 1.04
+R-squared (R2): 0.03
+
+------supervised shows model output------
+IMDB Model Metrics for Shows:
+Mean Squared Error (MSE): 0.90
+R-squared (R2): 0.09
+
+TMDB Model Metrics for Shows:
+Mean Squared Error (MSE): 1.07
+R-squared (R2): 0.02
+
+------unsupervised movies model output------
+Explained Variance Ratios for Principal Components (Movies):
+PC1: 0.3195
+PC2: 0.2449
+PC3: 0.2314
+PC4: 0.2042
+
+Cumulative Explained Variance:
+Components 1: 0.3195
+Components 2: 0.5644
+Components 3: 0.7958
+Components 4: 1.0000
+
+Loadings of Original Features in First Two Principal Components:
+runtime in PC1: 0.5504, PC2: -0.2185
+imdb_votes in PC1: 0.6255, PC2: 0.0098
+tmdb_popularity in PC1: 0.3265, PC2: 0.8916
+age_certification in PC1: 0.4464, PC2: -0.3964
+
+------unsupervised shows model output------
+Explained Variance Ratios for Principal Components:
+PC1: 0.3286
+PC2: 0.2980
+PC3: 0.1561
+PC4: 0.1209
+PC5: 0.0966
+
+Cumulative Explained Variance:
+Components 1: 0.3286
+Components 2: 0.6265
+Components 3: 0.7826
+Components 4: 0.9034
+Components 5: 1.0000
+
+Loadings of Original Features in First Two Principal Components:
+runtime in PC1: 0.2446, PC2: -0.5897
+seasons in PC1: 0.2436, PC2: 0.4946
+imdb_votes in PC1: 0.6472, PC2: 0.1341
+tmdb_popularity in PC1: 0.6306, PC2: 0.1444
+age_certification in PC1: 0.2536, PC2: -0.6073
+imdb_votes in PC1: 0.6464, PC2: 0.1376
+tmdb_popularity in PC1: 0.6298, PC2: 0.1477
+age_certification in PC1: 0.2571, PC2: -0.6061

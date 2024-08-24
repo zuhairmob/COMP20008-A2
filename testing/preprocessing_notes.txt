@@ -1,0 +1,114 @@
+filter by movie/show:
+    - very straight forwards 
+    - having to specify all column names a little cumbersome
+
+discretize by release year:
+    - Chose 2010 for all old movies because the data is exponential in growth
+    (there are only about 200 movies before 2000)
+    - The movies are split in a way that there is a roughly even number of 
+    titles in each group, even though the years are not equal in span 
+
+Preprocess text:
+    - standard casefolding and punctuation removal 
+    - I thought by including the stopword removal and lemamtizing 
+    runtime would be decreased (did not have a significant impact, lemmatizing 
+    increased runtime??)
+
+create bag of words function:
+    - straightforward, just uses preprocess text function 
+
+Encode age certification function:
+    - tried to match up movie ratings with show rating equivalents 
+    - Entries are in US Rating system, not AU so "M" etc is not present 
+    - 'R' has a different meaning in US system, and is also mostly used for
+    older movies 
+
+Impute age:
+    - runtime is horrible - takes 35 minutes for my pc to run using 8gb of 
+    memory
+    - Originally had a third array of unique words in title "titles_array",
+    but removed it due to runtime, but also questioned how much the title
+    would actually influence the rating - eg "Taxi Driver" is rated R? 
+    - Line 212 may be redundant? may change later 
+
+Impute age:
+    - runtime is horrible - takes 35 minutes for my pc to run using 8gb of 
+    memory
+    - Originally had a third array of unique words in title "titles_array",
+    but removed it due to runtime, but also questioned how much the title
+    would actually influence the rating - eg "Taxi Driver" is rated R? 
+    - Line 212 may be redundant? may change later 
+
+Impute votes popularity:
+    - Used K nearest Neighbour algorithm to impute votes/popularity.
+    - Based on the assumption that imdb votes correlates to tmbd popularity,
+    so the imputed missing values are based on the other value e.g if imdb
+    votes is missing, then tmdb popularity correlation is used and vice versa
+    - Using a low K value of 2 currently, probably too small IMO,
+    possible extension could be using elbow method, cross-validation,
+    grid search to find the mathematically optimal K value.
+
+Impute scores:
+    - Used K nearest Neighbour algorithm to impute scores.
+    - Based on the assumption that imdb score correlates to tmbd score,
+    so the imputed missing values are based on the other value e.g if imdb
+    score is missing, then tmdb score correlation is used and vice versa
+    - Using a low K value of 2 currently, probably too small IMO,
+    possible extension could be using elbow method, cross-validation,
+    grid search to find the mathematically optimal K value.
+
+
+Preprocess credits function:
+    - Wasn't sure whether or not to remove '(uncredited)' from the character,
+    ended up not removing it as it could potentially be used for analysis 
+    - Decided to casefold all names, even though they are likely only used for
+    final labelling and not string matching/analysis (unless we want to draw
+    conclusions like 'Most common actor first name in highly rated movies' xD)
+    - Converting the dictionary into a dataframe is a bit of a messenger
+
+Name preprocess:
+    - straightforwards 
+    - didn't want to lemmatize because they're literally names and we don't 
+    want to alter names
+
+
+
+LIMITATIONS:
+    - tmdb_popularity not used - data seems uncorrelated to the other scores.
+        - eg. most popular tmdb_popularity movie with 2274 is 'incantation'
+        - had an average score of 6.8, low votes?? 
+            - could be due to tmdbp_popularity being run by a different context
+        - imdb_votes may be a better estimator for popularity - more votes = 
+        higher popularity 
+        - again, imdb_votes may be skewed to US audience, but seems to correlate
+        more?
+    - Imputation of age_certification is based on genre and description. 
+        - Removed title from influencing age_certification imputation due 
+        to runtime concerns, and the fact that title may not have an impact 
+        on age_certification 
+        - Description bag of words may be hard to compare, as there are some
+        "garbage" strings which are combinations of integers and/or hyphenated
+        words. 
+            - Lemmatizing may also not have been successful 
+            - This may further decrease the accuracy of the data imputation
+        - Influence is not weighted, although the description array is much 
+        larger than the genre array (~30000 attributes vs 19)
+            - Having similar words in the description outweighs having the same
+            genre, which isn't necessarily accurate 
+            - eg. Same main character name, but different genre/movie may alter
+            imputed rating 
+        - Scores may be incorrect
+    - Documentaries are classified as "SHOWS", but have different trends as
+    regular shows 
+        - Documentaries are often stand alone films, and hence have only a 
+        single season, but a longer runtime. 
+        - Makes analysis harder, as there often aren't actors or characters,
+        or the actors are just narrators.
+        - This may be confirmed however if a comparison of average 
+        runtime v genre is created 
+    - KNN algorithm uses nearest neighbours as '2'.
+        - may not be suitable as haven't created an algorithm to determine the optimal value 
+        - also the same for imputing numerical scores 
+        - imputes potentially inaccurate scores
+        -  possible extension could be using elbow method, cross-validation,
+         grid search, etc. to find the mathematically optimal K value.
